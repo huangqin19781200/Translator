@@ -91,12 +91,9 @@ class MainWindow(QMainWindow, LoggingSettings):
             logging.info(f"Program closes.\n")
             self.close()
 
-# 程序退出执行的命令
-def app_exit() -> None:
-    app.exec()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("logo.ico"))
     window = MainWindow()
-    sys.exit(app_exit())
+    sys.exit(app.exec())
