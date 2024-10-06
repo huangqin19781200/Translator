@@ -55,8 +55,6 @@ class AppFunctions(MainWindow):
             data = json.loads(resp.to_json_string())
             target_text = str(data['TargetText'])
 
-            print(error)
-
             # 日志记录
             logging.info(
                 f"Setting:\n# source language: {source}\n# target language: {target}\n# input: {source_text}\n# output: {target_text}"
