@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="images">
+    <file>icon/arrow-bottom.png</file>
+    <file>icon/check-alt.png</file>
+    <file>icon/restore.png</file>
+    <file>icon/size-grip.png</file>
+    <file>icon/close.png</file>
+    <file>icon/maximize.png</file>
+    <file>icon/minimize.png</file>
+    <file>icon/logo.png</file>
+  </qresource>
+</RCC>
