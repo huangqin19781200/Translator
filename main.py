@@ -1,28 +1,23 @@
 import sys
-import os
 
 from config import *
 from models import *
 from ui_window import *
-
-from PySide6.QtWidgets import *
-from PySide6.QtGui import *
-from PySide6.QtCore import *
+from widgets import *
 
 
 class MainWindow(QMainWindow, LoggingSettings):
     def __init__(self) -> None:
-        # 初始化设置
+        # 初始化设置和窗口
         QMainWindow.__init__(self)
         LoggingSettings.__init__(self)
-        logging.info(f"Program starts.")
 
-        # 初始化窗口
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # 修复高分辨率的问题
-        os.environ["QT_FONT_DPI"] = "96"  
+        UiFunctions.ui_definitions(self)    # 初始化窗口设置
+
+        self.is_maximize = False    # 默认未最大化窗口
 
         # 设置按钮连接
         self.ui.btnSet.clicked.connect(self.buttonClick)
@@ -30,31 +25,17 @@ class MainWindow(QMainWindow, LoggingSettings):
         self.ui.btnClearInput.clicked.connect(self.buttonClick)
         self.ui.btnClearOutput.clicked.connect(self.buttonClick)
 
-        self.ui.btnMinimize.clicked.connect(self.buttonClick)
-        self.ui.btnMaximizeRestore.clicked.connect(self.buttonClick)
-        self.ui.btnClose.clicked.connect(self.buttonClick)
+        self.ui.frameAppBackground.mouseMoveEvent = self.moveWindow                         # 将窗口背景与窗口移动方法绑定
+        self.ui.frameTopBackground.mouseDoubleClickEvent = self.dobleClickMaximizeRestore   # 将顶部栏与双击最大化/还原方法绑定
 
-        self.setWindowFlags(Qt.FramelessWindowHint)         # 设置无边框
-        self.setAttribute(Qt.WA_TranslucentBackground)      # 将界面属性设置为半透明
-
-        # 设定阴影
-        self.shadow = QGraphicsDropShadowEffect()		
-        self.shadow.setBlurRadius(4)    		                    # 半径为 4
-        self.shadow.setColor(QColor(2, 10, 25))                     # 颜色为 2, 10, 25
-        self.shadow.setOffset(0, 0)                                 # 偏移为 0,0
-        self.ui.frameAppBackgroud.setGraphicsEffect(self.shadow)	# 为frameAppBackgroud设定阴影效果
-
-        # 使控制窗口的各功能生效
-        UiFunctions.uiDefinitions(self)
-
-        # 显示窗口
-        self.show()
+        self.show() # 显示窗口
     
     # 程序的按钮功能
     def buttonClick(self) -> None:
         # 获取按钮名字
         btn_name = self.sender().objectName()
 
+        # 输出翻译
         if btn_name == 'btnSet' or btn_name == 'btnAppend':
             selecte = self.ui.comboxSelect.currentText()
             source, target = AppFunctions.select_language(self, selecte)
@@ -77,19 +58,34 @@ class MainWindow(QMainWindow, LoggingSettings):
         if btn_name == 'btnClearOutput':
             self.ui.plainTextEditOutput.clear()
 
-        # 最小化隐藏窗口
-        if btn_name == 'btnMinimize':
-            self.showMinimized()
+    # 检测鼠标事件, 并根据鼠标事件调整窗口大小及拖拽握把
+    def resizeEvent(self, event) -> None:
+        self.left_grip.setGeometry(0, 10, 10, self.height())
+        self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height())
+        self.top_grip.setGeometry(0, 0, self.width(), 10)
+        self.bottom_grip.setGeometry(0, self.height() - 10, self.width(), 10)
+
+    # 检测鼠标按下事件, 获取鼠标指针在屏幕上的全局坐标，并赋值给变量
+    def mousePressEvent(self, event) -> None:
+        self.dragPos = event.globalPos()
+
+    # 双击最大化/还原窗口
+    def dobleClickMaximizeRestore(self, event) -> None:
+        # 当双击顶部栏时
+        if event.type() == QEvent.MouseButtonDblClick:
+            QTimer.singleShot(250, lambda: UiFunctions.maximize_restore(self))
+
+    # 设置窗口拖动
+    def moveWindow(self, event) -> None:
+        # 当前窗口状态为最大化时，还原窗口
+        if self.is_maximize:
             UiFunctions.maximize_restore(self)
 
-        # 最大化/还原窗口
-        if btn_name == 'btnMaximizeRestore':
-            UiFunctions.maximize_restore(self)
-
-        # 关闭窗口
-        if btn_name == 'btnClose':
-            logging.info(f"Program closes.\n")
-            self.close()
+        # 开始移动窗口
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
 
 
 if __name__ == "__main__":
