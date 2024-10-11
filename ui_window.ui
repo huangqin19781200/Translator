@@ -43,7 +43,7 @@ QMainWindow {
 }
 
 /* 程序背景 */
-#frameAppBackgroud {
+#frameAppBackground {
 	background-color: rgb(40, 44, 52);
 	border: 1px solid rgb(44, 49, 58);
 	border-top-left-radius: 10px;
@@ -57,6 +57,8 @@ QMainWindow {
 	background-color: rgb(33, 37, 43);
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 #frameTopButtons .QPushButton {
 	background-color: rgba(255, 255, 255, 0);
@@ -77,6 +79,8 @@ QMainWindow {
 /* 底部栏 */
 #frameBottomBackground {	
 	background-color: rgb(33, 37, 43);
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
@@ -182,7 +186,7 @@ QComboBox QAbstractItemView {
      <number>10</number>
     </property>
     <item>
-     <widget class="QFrame" name="frameAppBackgroud">
+     <widget class="QFrame" name="frameAppBackground">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
