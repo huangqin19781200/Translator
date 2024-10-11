@@ -1,17 +1,11 @@
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QHBoxLayout, QLabel, QMainWindow, QPlainTextEdit,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
 import resources
 
+
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow) -> None:
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(940, 560)
@@ -35,7 +29,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "/* \u7a0b\u5e8f\u80cc\u666f */\n"
-"#frameAppBackgroud {\n"
+"#frameAppBackground {\n"
 "	background-color: rgb(40, 44, 52);\n"
 "	border: 1px solid rgb(44, 49, 58);\n"
 "	border-top-left-radius: 10px;\n"
@@ -49,6 +43,8 @@ class Ui_MainWindow(object):
 "	background-color: rgb(33, 37, 43);\n"
 "	border-top-left-radius: 10px;\n"
 "	border-top-right-radius: 10px;\n"
+"	border-bottom-left-radius: 0px;\n"
+"	border-bottom-right-radius: 0px;\n"
 "}\n"
 "#frameTopButtons .QPushButton {\n"
 "	background-color: rgba(255, 255, 255, 0);\n"
@@ -59,10 +55,10 @@ class Ui_MainWindow(object):
 "	background-color: rgb(44, 49, 57);\n"
 "	border-style: solid;\n"
 "	border-radius: 4px;\n"
-"}\n"
+""
+                        "}\n"
 "#frameTopButtons .QPushButton:pressed {\n"
-"	background-color: rgb(2"
-                        "3, 26, 30);\n"
+"	background-color: rgb(23, 26, 30);\n"
 "	border-style: solid;\n"
 "	border-radius: 4px;\n"
 "}\n"
@@ -70,6 +66,8 @@ class Ui_MainWindow(object):
 "/* \u5e95\u90e8\u680f */\n"
 "#frameBottomBackground {	\n"
 "	background-color: rgb(33, 37, 43);\n"
+"	border-top-left-radius: 0px;\n"
+"	border-top-right-radius: 0px;\n"
 "	border-bottom-left-radius: 10px;\n"
 "	border-bottom-right-radius: 10px;\n"
 "}\n"
@@ -95,13 +93,13 @@ class Ui_MainWindow(object):
 "	border-radius: 5px;\n"
 "	padding: 10px;\n"
 "	selection-color: rgb(255, 255, 255);\n"
-"	selection-background-color: rgb(255, 121, 198);\n"
+"	sele"
+                        "ction-background-color: rgb(255, 121, 198);\n"
 "}\n"
 "QPlainTextEdit  QScrollBar:vertical {\n"
 "    width: 8px;\n"
 " }\n"
-"QPlainTextEdit  QScr"
-                        "ollBar:horizontal {\n"
+"QPlainTextEdit  QScrollBar:horizontal {\n"
 "    height: 8px;\n"
 " }\n"
 "QPlainTextEdit:hover {\n"
@@ -136,13 +134,13 @@ class Ui_MainWindow(object):
 "	padding: 5px;\n"
 "	padding-left: 10px;\n"
 "}\n"
-"QComboBox:hover{\n"
+"QComboBox:ho"
+                        "ver{\n"
 "	border: 2px solid rgb(64, 71, 88);\n"
 "}\n"
 "QComboBox::drop-down {\n"
 "	subcontrol-origin: padding;\n"
-"	subcontrol-position: top ri"
-                        "ght;\n"
+"	subcontrol-position: top right;\n"
 "	width: 25px; \n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgba(39, 44, 54, 150);\n"
@@ -163,16 +161,16 @@ class Ui_MainWindow(object):
         self.appMargins.setSpacing(0)
         self.appMargins.setObjectName(u"appMargins")
         self.appMargins.setContentsMargins(10, 10, 10, 10)
-        self.frameAppBackgroud = QFrame(self.styleSheet)
-        self.frameAppBackgroud.setObjectName(u"frameAppBackgroud")
-        self.frameAppBackgroud.setStyleSheet(u"")
-        self.frameAppBackgroud.setFrameShape(QFrame.Shape.NoFrame)
-        self.frameAppBackgroud.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout = QVBoxLayout(self.frameAppBackgroud)
+        self.frameAppBackground = QFrame(self.styleSheet)
+        self.frameAppBackground.setObjectName(u"frameAppBackground")
+        self.frameAppBackground.setStyleSheet(u"")
+        self.frameAppBackground.setFrameShape(QFrame.Shape.NoFrame)
+        self.frameAppBackground.setFrameShadow(QFrame.Shadow.Raised)
+        self.verticalLayout = QVBoxLayout(self.frameAppBackground)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.frameTopBackground = QFrame(self.frameAppBackgroud)
+        self.frameTopBackground = QFrame(self.frameAppBackground)
         self.frameTopBackground.setObjectName(u"frameTopBackground")
         self.frameTopBackground.setMinimumSize(QSize(0, 50))
         self.frameTopBackground.setMaximumSize(QSize(16777215, 50))
@@ -281,7 +279,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.frameTopBackground)
 
-        self.contentBox = QFrame(self.frameAppBackgroud)
+        self.contentBox = QFrame(self.frameAppBackground)
         self.contentBox.setObjectName(u"contentBox")
         self.contentBox.setFrameShape(QFrame.Shape.NoFrame)
         self.contentBox.setFrameShadow(QFrame.Shadow.Raised)
@@ -428,29 +426,22 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.contentBox)
 
 
-        self.appMargins.addWidget(self.frameAppBackgroud)
+        self.appMargins.addWidget(self.frameAppBackground)
 
         MainWindow.setCentralWidget(self.styleSheet)
 
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MainWindow) -> None:
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.labelTitleInfo.setText(QCoreApplication.translate("MainWindow", u"Translator - can help you learn the language", None))
-#if QT_CONFIG(tooltip)
         self.btnMinimize.setToolTip(QCoreApplication.translate("MainWindow", u"Minimize", None))
-#endif // QT_CONFIG(tooltip)
         self.btnMinimize.setText("")
-#if QT_CONFIG(tooltip)
         self.btnMaximizeRestore.setToolTip(QCoreApplication.translate("MainWindow", u"Maximize", None))
-#endif // QT_CONFIG(tooltip)
         self.btnMaximizeRestore.setText("")
-#if QT_CONFIG(tooltip)
         self.btnClose.setToolTip(QCoreApplication.translate("MainWindow", u"Close", None))
-#endif // QT_CONFIG(tooltip)
         self.btnClose.setText("")
         self.plainTextEditInput.setPlainText("")
         self.plainTextEditOutput.setPlainText("")
@@ -466,5 +457,4 @@ class Ui_MainWindow(object):
         self.comboxSelect.setItemText(5, QCoreApplication.translate("MainWindow", u"\u4e2d\u6587 >> \u0420\u0443\u0441\u0441\u043a\u0438\u0439", None))
 
         self.labelCredits.setText(QCoreApplication.translate("MainWindow", u"  Created by HGG", None))
-        self.labelVersion.setText(QCoreApplication.translate("MainWindow", u"v1.41005", None))
-    # retranslateUi
+        self.labelVersion.setText(QCoreApplication.translate("MainWindow", u"v1.41006", None))
